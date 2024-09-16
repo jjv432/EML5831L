@@ -19,13 +19,15 @@ format compact
 close all
 
 %% NOTES
-% Need to implement max vel!
+
 %Particles get 'stuck.' Is this bc I just told them to stay where they are
 %if they go out of bounds? Shouldn't this be taken care of by the fact that
 %they are randomized?
 
+%Implement limit on marginal improvement on cost!
+
 %% Parameters/ Initialization
-N = 100; %Number of Particles
+N = 200; %Number of Particles
 
 %termconditions = (Cost==0)&&(time >=100); for ex
 termconditions = 0;
@@ -50,19 +52,19 @@ G.best_pos = [0 0];
 
 alpha_1_max = 10;
 alpha_1_min = 1;
-alpha_1_delta = 0.05; %Chnage in alpha 1 each try
+alpha_1_delta = 0.5; %Chnage in alpha 1 each try
 alpha_1 = alpha_1_max;
 
 alpha_2 = 3;
-alpha_3 = 7;
+alpha_3 = 6.5;
 
-dt = 0.05;
+dt = 0.01;
 max_time = 20;
 sim_time = 0; % seconds
 
 tick = 1;
 
-max_vel = 10; %split into dimensions this is lazy rn
+max_vel = 10;
 global_cost(1) = G.best_cost;
 %% Iterations
 
@@ -74,7 +76,7 @@ for j = 1:N
     particle_name = string(strcat('p', num2str(j)));
     particle_names(j) = particle_name;
 
-    p.(particle_name).vel = [1, 1];
+    p.(particle_name).vel = [2*rand(1) - 1, 2* rand(1) - 1];
     p.(particle_name).pos = [rand_x, rand_y];
     p.(particle_name).best_cost = 1000;
     p.(particle_name).best_pos = p.(particle_name).pos;
@@ -89,7 +91,7 @@ while((G.best_cost ~= 0) && (sim_time <= max_time))
     global_cost(tick) = G.best_cost;
 
     if (alpha_1 > alpha_1_min)
-    alpha_1 = alpha_1 - alpha_1_delta;
+        alpha_1 = alpha_1 - alpha_1_delta;
     end
     for i = 1:N
 
@@ -103,7 +105,7 @@ while((G.best_cost ~= 0) && (sim_time <= max_time))
             p.(particle_name).best_pos = pos;
         end
 
-        if(abs(new_cost) < abs(G.best_cost))
+        if(new_cost < G.best_cost)
             G.best_cost = new_cost;
             G.best_pos = pos;
 
@@ -117,7 +119,7 @@ while((G.best_cost ~= 0) && (sim_time <= max_time))
         new_vel = alpha_1*cur_vel + alpha_2*rand(1)*(best_pos-cur_pos) + alpha_3*rand(1)*(g_best_pos-cur_pos);
         new_pos = (new_vel - cur_vel) * dt + cur_pos;
 
-        if (abs(new_vel) < max_vel)
+        if ((abs(new_vel(1)) < max_vel) && abs(new_vel(2)) < max_vel)
             p.(particle_name).vel = new_vel;
         end
         if ((abs(new_pos(1)) <=7) && (abs(new_pos(2))<=7))
@@ -129,28 +131,36 @@ while((G.best_cost ~= 0) && (sim_time <= max_time))
     end
 end
 
+fprintf("\n\nBest cost of %.2f found at (%.2f, %.2f)\n\n", G.best_cost, G.best_pos(1), G.best_pos(2))
 
 
-figure()
-pause(1)
-for z = 1:tick
-    clf
-    plot(positions(:, 1, z), positions(:, 2, z), 'x');
-    axis([-7 7 -7 7])
-    pause(.1);
+%% Plotting/ Animating
+plotBool = 0;
+plotResolution = 20;
 
-end
+if plotBool
+    figure()
+    pause(1)
+    for z = 1:plotResolution:tick
+        clf
+        plot(positions(:, 1, z), positions(:, 2, z), 'x');
+        axis([-7 7 -7 7])
+        pause(.1);
 
-figure()
-max_cost = max(global_cost);
-pause(1)
+    end
 
-for z = 1:tick
-    clf
-    plot(1:z, global_cost(1:z));
-    axis([0 tick 0 max_cost+2]);
-    pause(.1);
+    figure()
+    max_cost = max(global_cost);
+    min_cost = min(global_cost);
+    pause(1)
 
+    for z = 1:plotResolution:tick
+        clf
+        plot(1:z, global_cost(1:z));
+        axis([0 tick (min_cost-2) (max_cost+2)]);
+        pause(.5);
+
+    end
 end
 %% Class Example:
 % N = 1000; %number of particles
