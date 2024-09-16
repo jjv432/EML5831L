@@ -1,10 +1,9 @@
-function [] = hw1Plotter(positions)
-
+function [] = hw1Plotter(x_positions, y_positions)
+%UNUSED!!
 
     clf
-    x_positions = positions(:, 1);
-    y_positions = positions(:, 2);
-    plot(x_positions, y_positions);
+    plot(x_positions, y_positions, 'x');
+    pause(1);
 
 
 end
