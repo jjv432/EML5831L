@@ -8,11 +8,12 @@ format compact
 
 %Robot characteristics
 robot.X = 0;
-robot.Y = 2;
+robot.Y = 10;
 robot.Phi = 0;
 robot.radius = 1;
 robot.width = 2;
 robot.length = 1;
+
 
 robot.Vel = 1;
 robot.angVel = 0;
@@ -25,24 +26,22 @@ Wheel.gamma = 0;
 %
 des.Y = 0;
 dt = .01;
-old_error = 10;
-gains = [8 5];
-for i = 1:10000
+old_error = 5;
+error_sum = 0;
+drift = 0.1;
+gains = [0.2 0.9 0.1];
+for i = 1:2500
     clf
     y_front_wheel = drawRobot_Ackerman(robot, Wheel);
     pause(0)
-
+    width = robot.width;
     robot = fwdSim(robot, dt);
-    [omega, gamma, error] = my_controller(robot, des, old_error, dt, gains);
+    [omega, gamma, error] = my_controller(robot, des, old_error, error_sum, dt, gains, width, drift);
 
     Wheel.gamma = gamma;
     robot.angVel = omega;
    
     old_error = error;
-
-    
-
-    %fprintf("%d \t %f \n", i, gamma)
 
 end
 

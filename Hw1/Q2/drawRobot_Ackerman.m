@@ -1,6 +1,5 @@
 function [y_front_wheel] = drawRobot_Ackerman(robot, Wheel)
-%UNTITLED3 Summary of this function goes here
-%   Detailed explanation goes here
+
 
 % All for main body
 length = robot.length; %y-direction
@@ -43,9 +42,10 @@ y_front_wheel = [wheel_width, -wheel_width, -wheel_width, wheel_width, wheel_wid
 front_rot_matrix = [cos(gamma), -sin(gamma); sin(gamma), cos(gamma)];
 front_wheel_steered = front_rot_matrix * [x_front_wheel; y_front_wheel];
 
-x_front_wheel = front_wheel_steered(1,:) + width;
+front_wheel_translated = [front_wheel_steered(1,:) + width; front_wheel_steered(2,:)];
+%x_front_wheel = front_wheel_steered(1,:) + width;
 
-front_wheel_rotated = rot_matrix * [x_front_wheel; y_front_wheel];
+front_wheel_rotated = rot_matrix * front_wheel_translated;
 
 front_wheel_translated_rotated = [front_wheel_rotated(1,:) + x; front_wheel_rotated(2,:) + y];
 
@@ -54,12 +54,9 @@ front_wheel_translated_rotated = [front_wheel_rotated(1,:) + x; front_wheel_rota
 clf
 fill(box_translated_rotated(1,:), box_translated_rotated(2,:), 'b')
 hold on
+grid on
 fill(back_wheel_translated_rotated(1,:), back_wheel_translated_rotated(2,:), 'k');
 hold on
 fill(front_wheel_translated_rotated(1,:), front_wheel_translated_rotated(2,:), 'k')
-hold on
-plot(front_wheel_translated_rotated(1,:), mean(front_wheel_translated_rotated(2,:)), 'xr')
-axis(15*[-1 1 -1 1])
+axis(12*[-1 1 -1 1])
 
-
-%fprintf("%d\n", mean(front_wheel_translated_rotated(2,:)));
