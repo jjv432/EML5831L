@@ -8,8 +8,14 @@ format compact
 %{
     Use section 1 to generate a new save file for data that you've
     collected from the Optitrack MoCap cameras.  Uncomment the line is
+    
     Section 2 and comment the line in Section 1 if you want to read from a
     previously saved struct.  
+
+    If you have a version of Matlab that is 23b or older, you need to change
+    line 261 of the optitrack_R2 function to use ".xml" instead of ".json"
+
+    You'll also need to make this change to line 35 of this script
 %}
 %% 1. Organize New Data
 
@@ -40,7 +46,7 @@ Robot = readstruct(strcat(FileName, ".json"));
     the y-axis.
 %}
 
-y_rotation = thetaFix(Robot.RigidBodyRotationY);
+y_rotation = thetaFix(Robot.MobRobRotationY);
 
 % Showing an example of how to plot the results of this function
 
