@@ -5,17 +5,20 @@ format compact
 
 %%
 
-sample_length = 100;
+sample_length = 400;
 circle_radius = .25;
+dt= 0.005;
+vx=0.2;
+x_vals=0;
+y_vals=0;
+phi(1)=0;
+AngVel= vx/circle_radius;
 
-phi(1) = 0;
-
-x_vals = circle_radius * cos(linspace(pi/2, 0, sample_length));
-y_vals = circle_radius * sin(linspace(pi/2, 0, sample_length));
 
 for i = 2:sample_length
-    temp = phi(i-1) - (pi/2)/sample_length;
-    phi(i) = temp;
+     x_vals(i) = x_vals(i-1) + vx*cos(phi(i-1))*dt;
+    y_vals(i) = y_vals(i-1) + vx*sin(phi(i-1))*dt;
+    phi(i) = phi(i-1) - AngVel*dt;
 end
 
-trajectoryPlotter(x_vals, y_vals, phi);
+%trajectoryPlotter(x_vals, y_vals, phi);
