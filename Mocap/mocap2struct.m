@@ -16,7 +16,7 @@ format compact
 % Creates a struct to store the CSV data.  Only run this line one time for
 % each csv, then read from the saved .mat file in the future.
 
-Robot = optitrack_R2();
+%Robot = optitrack_R2();
 
 %% 2. Read Saved Data
 %{ 
@@ -26,8 +26,8 @@ Robot = optitrack_R2();
     "test1.json" has FileName "test1"
 %}
 
-% FileName = "RotationTest_009";
-% Robot = readstruct(strcat(FileName, ".json"));
+FileName = "RotationTest_009";
+Robot = readstruct(strcat(FileName, ".json"));
 
 
 
@@ -40,7 +40,7 @@ Robot = optitrack_R2();
     the y-axis.
 %}
 
-y_rotation = thetaFix(Robot.MobRobRotationY);
+y_rotation = thetaFix(Robot.RigidBodyRotationY);
 
 % Showing an example of how to plot the results of this function
 
