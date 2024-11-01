@@ -1,6 +1,6 @@
 clc; clear all; close all; format compact;
 
-addpath('../rc-matlab-lib');
+addpath('rc-labs/rc-matlab-lib');
 
 RC = RCCar();
 
