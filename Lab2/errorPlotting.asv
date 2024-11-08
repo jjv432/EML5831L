@@ -134,7 +134,7 @@ AngVel= v/circle_radius;
 
 
 for i = 2:(endIndex - startIndex)
-     x_vals(i) = x_vals(i-1) + v*cos(phi(i-1))*dt;
+    x_vals(i) = x_vals(i-1) + v*cos(phi(i-1))*dt;
     z_vals(i) = z_vals(i-1) + v*sin(phi(i-1))*dt;
     phi(i) = phi(i-1) + AngVel*dt;
 end
@@ -179,7 +179,7 @@ plot(CWRobot.MobRobZ)
 startIndex = 257;
 endIndex = 490;
 
-circle_radius = .25;
+circle_radius = .3;
 
 x_vals=0;
 z_vals=0;
@@ -188,7 +188,7 @@ AngVel= v/circle_radius;
 
 
 for i = 2:(endIndex - startIndex)
-     x_vals(i) = x_vals(i-1) + v*cos(phi(i-1))*dt;
+    x_vals(i) = x_vals(i-1) + v*cos(phi(i-1))*dt;
     z_vals(i) = z_vals(i-1) + v*sin(phi(i-1))*dt;
     phi(i) = phi(i-1) - AngVel*dt;
 end
@@ -223,5 +223,5 @@ clear x_vals z_vals phi
 
 %%
 %
-% <include>trackErrorCalc/m</include>
+% <include>trackErrorCalc.m</include>
 %
