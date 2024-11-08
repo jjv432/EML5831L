@@ -220,3 +220,8 @@ saveas(gcf, "CWATE", 'jpg')
 
 
 clear x_vals z_vals phi
+
+%%
+%
+% <include>trackErrorCalc.m</include>
+%
