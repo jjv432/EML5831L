@@ -7,7 +7,7 @@ close all
 
 %%
 
-addpath('../rc-matlab-lib');
+addpath('../rc-labs/rc-matlab-lib');
 
 % ConnectToROS();
 % Connect to RC
@@ -102,3 +102,12 @@ xlabel("Time (s)")
 ylabel("Steering Angle (rad)")
 
 sgtitle("RC Wall Follower Results")
+
+%% 
+%
+% <include>getDistanceToRightWall.m</include>
+%
+% <include>getDistanceToLefttWall.m</include>
+%
+% <include>getDistancesInRange.m</include>
+%

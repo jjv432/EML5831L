@@ -7,6 +7,7 @@ addpath('../rc-matlab-lib');
 
 %RC = RCCar();
 
+% This code was used to determine the turn radius of the car
 x = .25;
 for i = 1:2250
 RC.setSpeed(0.5);
