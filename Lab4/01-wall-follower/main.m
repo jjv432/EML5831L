@@ -9,7 +9,7 @@ close all
 
 addpath('../rc-labs/rc-matlab-lib');
 
-% ConnectToROS();
+%ConnectToROS();
 % Connect to RC
 RC = RCCar();
 
@@ -48,8 +48,6 @@ for k = 1:totalTimeSteps
 
     % Obtain the current distance to the right wall
     currentDistance = getDistanceToRightWall(RC); % m
-
-    %% FIX THIS SECTION
 
     % Calculate the error in distance
     distanceError = -currentDistance + desiredDistance; % m

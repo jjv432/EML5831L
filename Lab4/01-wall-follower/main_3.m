@@ -3,7 +3,7 @@ clc; close all; format compact;
 addpath('../rc-labs/rc-matlab-lib');
 
 % Only need to run once, just don't clearvars
-%RC = RCCar();
+RC = RCCar();
 
 % Put the robot at the origin, clear map
 resetMap(RC);
