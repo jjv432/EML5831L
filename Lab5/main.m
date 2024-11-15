@@ -5,7 +5,7 @@ format compact;
 
 %%
 
-nobst = 4;
+nobst = 10;
 rad_min = .25;
 rad_max = 1.25;
 map = [0 10; 0 10];
@@ -14,6 +14,12 @@ Obstacle = makeObstacles(nobst, rad_min, rad_max, map);
 
 %%
 figure();
+xmin = map(1);
+xmax = map(3);
+ymin = map(2);
+ymax = map(4);
+
+axis([xmin xmax ymin ymax])
 
 for i = 1:nobst
     hold on
@@ -35,9 +41,9 @@ plot(q_init_x, q_init_y,'kx')
 
 goalBool = 0;
 
-lookahead = .2;
+lookahead = .1;
 
-NodeList = [q_init_x; q_init_y];
+NodeList = [q_init_x; q_init_y; 1];
 currentNode = [q_init_x, q_init_y];
 
 waypointThreshold = lookahead/2;
@@ -45,14 +51,15 @@ waypointThreshold = lookahead/2;
 
 
 %% Drawing nodes
-j = 1;
-while curDistance > waypointThreshold
-    smallestDistance = inf;
-    xmin = map(1);
-    xmax = map(3);
-    ymin = map(2);
-    ymax = map(4);
+goalBool = 1;
 
+
+j = 1;
+while goalBool
+    smallestDistance = inf;
+
+
+    % Every 10 loops, make x and y the goal, otherwise random
     if (mod(j, 10) == 0)
         randPointX = q_goal_x;
         randPointY = q_goal_y;
@@ -75,18 +82,50 @@ while curDistance > waypointThreshold
 
     end
 
+    % Assigning position for the new node
     bestNodeX = NodeList(1, bestNodeIndex);
     bestNodeY= NodeList(2, bestNodeIndex);
-    newNodeX = bestNodeX + lookahead * cos(atan2((randPointY - bestNodeY), (randPointX- bestNodeX)));
-    newNodeY = bestNodeY + lookahead * sin(atan2((randPointY - bestNodeY), (randPointX- bestNodeX)));
+    possibleX = bestNodeX + lookahead * cos(atan2((randPointY - bestNodeY), (randPointX- bestNodeX)));
+    possibleY = bestNodeY + lookahead * sin(atan2((randPointY - bestNodeY), (randPointX- bestNodeX)));
 
-    NodeList = horzcat(NodeList, [newNodeX; newNodeY]);
+    [inPolygon] = checkPoint([possibleX, possibleY], Obstacle, nobst);
 
-    plot(newNodeX, newNodeY, 'gx');
-    drawnow;
+    if inPolygon == 0
+        newNodeX = possibleX;
+        newNodeY = possibleY;
 
+        % Adding the current node to the list of nodes
+        NodeList = horzcat(NodeList, [newNodeX; newNodeY; bestNodeIndex]);
+
+        % Plot the new node on the same figure
+        plot(newNodeX, newNodeY, 'gx');
+        drawnow;
+
+        % Find the distance to the goal and stop if it closer than the
+        % threshold
+        dist2goal = sqrt((newNodeX-q_goal_x)^2 + (newNodeY-q_goal_y)^2);
+        if dist2goal < waypointThreshold
+
+            goalBool = 0;
+        end
+    end
+
+
+
+    % This is for the modulus thing
     j = j+1;
 
+end
 
+%% Finding the path from end to beginning
+plotIndex = size(NodeList, 2);
+while plotIndex > 1
+
+    % plotIndex = NodeList(3, plotIndex);
+
+    plot(NodeList(1, plotIndex), NodeList(2, plotIndex), 'bo');
+    drawnow;
+
+    plotIndex = NodeList(3, plotIndex);
 
 end
