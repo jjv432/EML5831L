@@ -44,7 +44,7 @@ float findTurnRadius(float rX,float rY,float rP,float wX,float wY,int *flag, flo
 
   float l_squared = pow(local_x,2) + pow(local_y,2);
 
-  float turnRadius = l_squared/(2.*local_y);
+  float turnRadius = l_squared/(2.*local_y);11111111111111111
 
   return turnRadius;
 }

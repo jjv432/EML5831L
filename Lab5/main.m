@@ -119,13 +119,17 @@ end
 
 %% Finding the path from end to beginning
 plotIndex = size(NodeList, 2);
+indices = plotIndex;
 while plotIndex > 1
 
-    % plotIndex = NodeList(3, plotIndex);
-
-    plot(NodeList(1, plotIndex), NodeList(2, plotIndex), 'bo');
-    drawnow;
-
     plotIndex = NodeList(3, plotIndex);
+    indices = [indices, plotIndex];
 
+end
+
+indices = flip(indices);
+
+for i = 1:length(indices)
+    plot(NodeList(1, indices(i)), NodeList(2, indices(i)), 'bo');
+    drawnow;
 end
