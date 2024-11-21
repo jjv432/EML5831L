@@ -1,16 +1,21 @@
-function [inPolygon] = checkPoint(point, obstacles, nobst)
+function [inPolygon] = checkPoint(newPoint, beginningPoint, obstacles, nobst)
 
 inSum = 0;
+searchRes = 100;
+
+xs = linspace(newPoint(1), beginningPoint(1), searchRes);
+ys = linspace(newPoint(2), beginningPoint(2), searchRes);
 
 for i = 1:nobst
     
     x_coords = obstacles.(strcat("O", num2str(i))).xCoords;
     y_coords = obstacles.(strcat("O", num2str(i))).yCoords;
 
-    in = inpolygon(point(1), point(2), x_coords, y_coords);
+    for j = 1:length(xs)
+    in = inpolygon(xs(j), ys(j), x_coords, y_coords);
 
     inSum = inSum + in;
-
+    end
 
 end
 

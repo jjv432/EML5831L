@@ -6,7 +6,7 @@ format compact;
 %%
 
 nobst = 10;
-rad_min = .25;
+rad_min = .5;
 rad_max = 1.25;
 map = [0 10; 0 10];
 
@@ -41,7 +41,7 @@ plot(q_init_x, q_init_y,'kx')
 
 goalBool = 0;
 
-lookahead = .1;
+lookahead = .5;
 
 NodeList = [q_init_x; q_init_y; 1];
 currentNode = [q_init_x, q_init_y];
@@ -88,7 +88,9 @@ while goalBool
     possibleX = bestNodeX + lookahead * cos(atan2((randPointY - bestNodeY), (randPointX- bestNodeX)));
     possibleY = bestNodeY + lookahead * sin(atan2((randPointY - bestNodeY), (randPointX- bestNodeX)));
 
-    [inPolygon] = checkPoint([possibleX, possibleY], Obstacle, nobst);
+
+    % Checking for obstacles
+    [inPolygon] = checkPoint([possibleX, possibleY], [bestNodeX, bestNodeY], Obstacle, nobst);
 
     if inPolygon == 0
         newNodeX = possibleX;
