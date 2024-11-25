@@ -26,8 +26,8 @@ end
 
 %% Making the U shape
 
-u_x_vals = [zeros(1, 5), linspace(0, 1, 5), ones(1,5), linspace(1, 0, 5), zeros(1,5), linspace(0, 1.25, 5), 1.25*ones(1,5), linspace(1.25, 0, 5)];
-u_y_vals = [linspace(0, .25, 5) .25*ones(1,5), linspace(.25, 1.5, 5), 1.5*ones(1,5), linspace(1.5, 1.75, 5), 1.75*ones(1,5), linspace(1.75, 0, 5), zeros(1,5)];
+u_x_vals = [zeros(1, 4), linspace(0, .8, 4), ones(1,4), linspace(1, .2, 4), zeros(1,4), linspace(0, 1, 4), 1.25*ones(1,5), linspace(1.25, 0.25, 4)];
+u_y_vals = [linspace(0, .2, 4), .25*ones(1,4), linspace(.25, 1.25, 4), 1.5*ones(1,4), linspace(1.5, 1.7, 4), 1.75*ones(1,5), linspace(1.4, .28, 4), zeros(1,4)];
 
 theta = u_posn(3);
 rotMatrix = [cos(theta), -sin(theta); sin(theta), cos(theta)];

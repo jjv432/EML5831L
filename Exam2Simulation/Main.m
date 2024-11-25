@@ -5,6 +5,8 @@ clc; clear all; close all; format compact;
 %{
 
     Need to implement the PID part that is in the notes
+    Need to make an adjustment for if you're getting away from the
+    obstaclel; actually use the other tolerance value
 
 %}
 
@@ -63,8 +65,8 @@ state = 1;
 
 obstTolTowards = .5;
 obstTolAway = .75;
-wallToleranceTowards = .3;
-wallToleranceAway = .3;
+wallToleranceTowards = .2;
+wallToleranceAway = .2;
 
 while getEuclideanDist([Robot.x Robot.y], [x_goal y_goal]) > goalThreshold
     closestDistance = inf;
@@ -87,7 +89,7 @@ while getEuclideanDist([Robot.x Robot.y], [x_goal y_goal]) > goalThreshold
             closestSegmentIndex = z;
         end
     end
-    closestSegmentIndex
+
 
 phi_goal = atan((y_goal - Robot.y) / (x_goal - Robot.x));
 
