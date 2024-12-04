@@ -1,4 +1,4 @@
-function [NodeList, indices] = my_RRT(startPos, goalPos, lookahead, mapAxes, saved_map)
+function [NodeList, indices] = my_RRT(startPos, goalPos, lookahead, mapAxes, saved_map, plotBool)
 
 
 xmin = mapAxes(1);
@@ -12,9 +12,11 @@ q_init_y = startPos(2);
 q_goal_x = goalPos(1);
 q_goal_y = goalPos(2);
 
+if plotBool
 hold on
 plot(q_goal_x, q_goal_y, 'kx')
 plot(q_init_x, q_init_y,'kx')
+end
 
 goalBool = 0;
 
@@ -77,9 +79,11 @@ while goalBool
         % Adding the current node to the list of nodes
         NodeList = horzcat(NodeList, [newNodeX; newNodeY; bestNodeIndex]);
 
+        if plotBool
         % Plot the new node on the same figure
         plot(newNodeX, newNodeY, 'gx');
         drawnow;
+        end
 
         % Find the distance to the goal and stop if it closer than the
         % threshold
@@ -111,9 +115,11 @@ end
 
 indices = flip(indices);
 
+if plotBool
 for i = 1:length(indices)
     plot(NodeList(1, indices(i)), NodeList(2, indices(i)), 'bo');
     drawnow;
+end
 end
 
 end

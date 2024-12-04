@@ -30,7 +30,7 @@ mapAxes = [-5 5 -5 5];
 inflate_size = 0.01; % m
 
 start_position = [0 0];
-goal_position = [4; -.5];
+goal_position = [2; 0];
 goalBool = 0;
 %% Run this loop until getting to the goal
 
@@ -55,8 +55,9 @@ start_position = [RC.X RC.Y];
 %% Step 3: Perform the RRT from Start to Goal
 
 lookahead = .5;
+plotBool = 0;
 
-[NodeList, indices] = my_RRT(start_position, goal_position, lookahead, mapAxes, saved_map);
+[NodeList, indices] = my_RRT(start_position, goal_position, lookahead, mapAxes, saved_map, plotBool);
 
 %% Step 4: Run Pure-Pursuit
 
@@ -77,5 +78,5 @@ end
 
 end
 
-RC.setSpeed(0);
-RC.setSteeringAngle(0);
+% RC.setSpeed(0);
+% RC.setSteeringAngle(0);
