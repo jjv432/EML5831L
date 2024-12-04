@@ -30,7 +30,7 @@ mapAxes = [-5 5 -5 5];
 inflate_size = 0.01; % m
 
 start_position = [0 0];
-goal_position = [2; 0];
+goal_position = [1; -.5];
 goalBool = 0;
 %% Run this loop until getting to the goal
 
