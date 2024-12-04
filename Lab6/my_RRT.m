@@ -1,4 +1,4 @@
-function [NodeList] = my_RRT(startPos, goalPos, lookahead, mapAxes, saved_map)
+function [NodeList, indices] = my_RRT(startPos, goalPos, lookahead, mapAxes, saved_map)
 
 
 xmin = mapAxes(1);
