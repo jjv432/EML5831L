@@ -1,9 +1,9 @@
 function [] = my_PurePursuit(NodeList, RC, indices)
 
 %% Purepursuit
-threshold = 0.05; % Threshold to determine if the robot has reached the waypoint
+threshold = 0.075; % Threshold to determine if the robot has reached the waypoint
 
-for idx = 1:length(indices) - 1
+idx = 1;
     % Get the current and next waypoint
     Waypoint = [NodeList(1, indices(idx + 1)), NodeList(2, indices(idx + 1))];
 
@@ -41,7 +41,3 @@ for idx = 1:length(indices) - 1
         pause(0.05); % Small delay for command execution
     end
 end
-
-% Stop the robot at the end
-RC.setSteeringAngle(0);
-RC.setSpeed(0);

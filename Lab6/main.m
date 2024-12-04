@@ -8,9 +8,8 @@
 % file to this directory
 
 clc
-clearvars
 close all
-
+clearvars
 addpath("../Lab5/rc-labs/rc-matlab-lib")
 
 %%
@@ -26,7 +25,7 @@ resetMap(RC);
 RC.setSteeringAngle(0);
 RC.setSpeed(0);
 
-mapAxes = [0 5 -2 1];
+mapAxes = [-5 5 -5 5];
 % Use the inflate() function to inflate the obstacles
 inflate_size = 0.01; % m
 
@@ -64,13 +63,19 @@ lookahead = .5;
 % This is gonna run through all of the purepursuit rn
 my_PurePursuit(NodeList, RC, indices);
 
+
 %% Step 5: Check if the robot is close enough to the goal
 
-distance2Goal = euclideanRobot2Goal(RC, goal);
+distance2Goal = euclideanRobot2Goal(RC, goal_position);
+
+goalThreshold = .5;
 
 if distance2Goal <= goalThreshold
     goalBool = 1;
-    RC.setSpeed(0);
+    
 end
 
 end
+
+RC.setSpeed(0);
+RC.setSteeringAngle(0);
