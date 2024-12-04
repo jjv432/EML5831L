@@ -94,12 +94,13 @@ while goalBool
         end
         % This is for the modulus thing
         j = j+1;
+        phi = atan2(NodeList(2, j) - NodeList(2, j-1), NodeList(1,j)- NodeList(1, j-1));
         
     end
 
     
     k = k+1;    
-    phi = atan2(NodeList(2, j) - NodeList(2, j-1), NodeList(1,j)- NodeList(1, j-1));
+    
 
 end
 
