@@ -10,21 +10,22 @@ for j = 1:length(xs)
     in = checkOccupancy(saved_map, [xs(j), ys(j)]);
 
     inSum = inSum + in;
+    if in == 1
+        break;
+    end
 end
 
 
 if inSum > 0
     inPolygon = 1;
+    
 else
     inPolygon = 0;
-end
-
-if inSum > 0
-    inPolygon = 1;
-else
-    inPolygon = 0;
+    
 end
 
 newX = newPoint(1);
 newY = newPoint(2);
+
+
 end

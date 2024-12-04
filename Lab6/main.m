@@ -8,7 +8,7 @@
 % file to this directory
 
 clc
-clear
+clearvars
 close all
 
 addpath("../Lab5/rc-labs/rc-matlab-lib")
@@ -72,11 +72,12 @@ goalBool = 1;
 phi = 0;
 
 j = 1;
+k = 1;
 while goalBool
     smallestDistance = inf;
 
     % Every 10 loops, make x and y the goal, otherwise random
-    if (mod(j, 10) == 0)
+    if (mod(k, 50) == 0)
         randPointX = q_goal_x;
         randPointY = q_goal_y;
     else
@@ -132,10 +133,11 @@ while goalBool
         end
         % This is for the modulus thing
         j = j+1;
+        
     end
 
     
-
+    k = k+1;    
     phi = atan2(NodeList(2, j) - NodeList(2, j-1), NodeList(1,j)- NodeList(1, j-1));
 
 end
