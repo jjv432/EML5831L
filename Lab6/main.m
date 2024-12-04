@@ -12,6 +12,11 @@ clearvars
 close all
 
 addpath("../Lab5/rc-labs/rc-matlab-lib")
+% RC = RCCar();
+% 
+% resetMap(RC);
+% RC.setSteeringAngle(0);
+% RC.setSpeed(0);
 %%
 
 load('OccupancyGridSave.mat')
@@ -59,7 +64,7 @@ plot(q_init_x, q_init_y,'kx')
 
 goalBool = 0;
 
-lookahead = .1;
+lookahead = .5;
 
 NodeList = [q_init_x; q_init_y; 1];
 currentNode = [q_init_x, q_init_y];
@@ -77,7 +82,7 @@ while goalBool
     smallestDistance = inf;
 
     % Every 10 loops, make x and y the goal, otherwise random
-    if (mod(k, 50) == 0)
+    if (mod(k, 10) == 0)
         randPointX = q_goal_x;
         randPointY = q_goal_y;
     else
@@ -107,11 +112,11 @@ while goalBool
 
 
     % Checking for obstacles
-    [inPolygon, newX, newY] = checkPoint([possibleX, possibleY], [bestNodeX, bestNodeY], saved_map, phi, lookahead, radius_min);
+    [inPolygon, newx, newy] = checkPoint([possibleX, possibleY], [bestNodeX, bestNodeY], saved_map);
 
     % Assign the waypoint x and y position to the 'radius-fixed' waypoint
-    possibleX = newX;
-    possibleY = newY;
+    possibleX = newx;
+    possibleY = newy;
 
     if inPolygon == 0
         newNodeX = possibleX;
@@ -178,25 +183,22 @@ for idx = 1:length(indices) - 1
         
         % Turn radius calculations
         l_squared = local(1)^2 + local(2)^2;
-        if local(2) ~= 0
+      
             radius = l_squared / (2 * local(2));
-        else
-            radius = inf; % If straight ahead, assume large radius
-        end
         
         % Calculate steering angle (gamma)
         gamma = radius * (0.25 / 0.715); % Adjust constants based on your robot's dynamics
-        
+
         % Determine motion based on waypoint position in the robot's frame
         localPhi = atan2(local(2), local(1));
         if localPhi < -pi/4
             % Too far left, reverse slightly
             RC.setSpeed(-0.25);
-            RC.setSteeringAngle(0);
+            RC.setSteeringAngle(.125);
         elseif localPhi > pi/4
             % Too far right, reverse slightly
             RC.setSpeed(-0.25);
-            RC.setSteeringAngle(0);
+            RC.setSteeringAngle(-.125);
         else
             % Forward motion towards waypoint
             RC.setSpeed(0.25);

@@ -1,4 +1,4 @@
-function [inPolygon, newX, newY] = checkPoint(newPoint, beginningPoint, saved_map, phi, lookahead, radius_min)
+function [inPolygon, newX, newY] = checkPoint(newPoint, beginningPoint, saved_map)
 
 inSum = 0;
 searchRes = 100;
