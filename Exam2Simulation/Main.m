@@ -1,14 +1,7 @@
 clc; clear all; close all; format compact;
 
-%% Notes
-
-%{
-
-    Need to implement the PID part that is in the notes
-    Need to make an adjustment for if you're getting away from the
-    obstaclel; actually use the other tolerance value
-
-%}
+% Exam 2 Simulation Mobile Robotics
+% Jack Vranicar 11/25/24
 
 %% Robot Characteristics
 Robot.x = 0;
@@ -32,7 +25,7 @@ map = [0 5 0 5];
 figure;
 grid on
 
-Obstacle = makeObstacles(obstPosns, obst_radius, [3.5 2 pi/4], map);
+Obstacle = makeObstacles(obstPosns, obst_radius, [3.5 2 pi/2], map);
 nobst = size(obstPosns, 1);
 
 for i = 1:nobst
@@ -56,7 +49,7 @@ end
 
 %% Go to Goal
 
-y_goal = 4;
+y_goal = 4.5;
 x_goal = 4;
 plot(x_goal, y_goal, 'bo')
 goalThreshold = .1;
@@ -150,3 +143,12 @@ phi_goal = atan((y_goal - Robot.y) / (x_goal - Robot.x));
     delete(h3);
    
 end
+
+%%
+%
+% <include>drawRobot.m</include>
+%
+% <include>getEuclideanDist.m</include>
+%
+% <include>makeObstacles.m</include>
+%
