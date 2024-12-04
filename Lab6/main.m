@@ -6,13 +6,14 @@ addpath("../Lab5/rc-labs/rc-matlab-lib")
 %% Step 0: Setup and Parameters
 
 RC = RCCar();
+RC.resetMap;
 
 RC.setSteeringAngle(0);
 RC.setSpeed(0);
 
-mapAxes = [-5 5 -5 5];
+mapAxes = [-5 5 -2.5 2.5];
 
-inflate_size = 0.01; % m
+inflate_size = 0.05; % m
 
 start_position = [0 0];
 goal_position = [4; 0];
@@ -24,7 +25,7 @@ while goalBool == 0
 %% Step 1: Generate Map Using LIDAR
 
 map = RC.getMap();
-pause(1)
+pause(.2)
 mapf = readOccupancyGrid(map);
 map = mapf;
 
@@ -42,7 +43,7 @@ start_position = [RC.X RC.Y];
 %% Step 3: Perform the RRT from Start to Goal
 
 lookahead = .5;
-plotBool = 1;
+plotBool = 0;
 
 [NodeList, indices] = my_RRT(start_position, goal_position, lookahead, mapAxes, map, plotBool);
 
@@ -56,7 +57,7 @@ my_PurePursuit(NodeList, RC, indices);
 
 distance2Goal = euclideanRobot2Goal(RC, goal_position);
 
-goalThreshold = .5;
+goalThreshold = .1;
 
 if distance2Goal <= goalThreshold
     goalBool = 1;

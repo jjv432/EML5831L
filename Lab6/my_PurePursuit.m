@@ -1,7 +1,7 @@
 function [] = my_PurePursuit(NodeList, RC, indices)
 
 %% Purepursuit
-threshold = 0.075; % Threshold to determine if the robot has reached the waypoint
+threshold = 0.2; % Threshold to determine if the robot has reached the waypoint
 
 idx = 1;
     % Get the current and next waypoint

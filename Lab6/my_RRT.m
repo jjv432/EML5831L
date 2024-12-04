@@ -1,4 +1,4 @@
-function [NodeList, indices] = my_RRT(startPos, goalPos, lookahead, mapAxes, saved_map, plotBool)
+function [NodeList, indices] = my_RRT(startPos, goalPos, lookahead, mapAxes, map, plotBool)
 
 
 xmin = mapAxes(1);
@@ -66,7 +66,7 @@ while goalBool
 
 
     % Checking for obstacles
-    [inPolygon, newx, newy] = checkPoint([possibleX, possibleY], [bestNodeX, bestNodeY], saved_map);
+    [inPolygon, newx, newy] = checkPoint([possibleX, possibleY], [bestNodeX, bestNodeY], map);
 
     % Assign the waypoint x and y position to the 'radius-fixed' waypoint
     possibleX = newx;
