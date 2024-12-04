@@ -7,7 +7,6 @@ addpath("../Lab5/rc-labs/rc-matlab-lib")
 
 RC = RCCar();
 
-resetMap(RC);
 RC.setSteeringAngle(0);
 RC.setSpeed(0);
 
@@ -25,11 +24,13 @@ while goalBool == 0
 %% Step 1: Generate Map Using LIDAR
 
 map = RC.getMap();
+pause(1)
 mapf = readOccupancyGrid(map);
 map = mapf;
 
 inflate(map, inflate_size)
 
+figure()
 show(map);
 axis(mapAxes)
 
@@ -41,7 +42,7 @@ start_position = [RC.X RC.Y];
 %% Step 3: Perform the RRT from Start to Goal
 
 lookahead = .5;
-plotBool = 0;
+plotBool = 1;
 
 [NodeList, indices] = my_RRT(start_position, goal_position, lookahead, mapAxes, map, plotBool);
 
